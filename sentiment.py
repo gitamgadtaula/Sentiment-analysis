@@ -1,14 +1,6 @@
-from textblob import TextBlob
-
-# # //scaffold only
-# # // string to be generated from twitter api
-
-# str1 = 'i would hate you but you are my everything'
-# str2 = 'i love you, you are so good, marvellous excellent for me, bravo, yes, wow ,amazingly'
-# blob1 = TextBlob(str2)
-# print(blob1.sentiment)
-
 import tweepy
+from textblob import TextBlob
+import statistics
 consumer_key="QUwsNYdC2UQScynZeB0MTqEUb"
 consumer_secret="r0nVOCL0knw0e3M8xVnpJLENsWdZVZUJXwz5rFwpFSq9bF0v74"
 access_token="457289895-8LpGsq0X4tfmKx2T2Z5q26Dob5bIyT1NypmFf0aU"
@@ -30,12 +22,17 @@ def sentiment_scores(blobText) :
         print("Negative !! SELL") 
   
     else : 
-        print("Neutral !! HODL")
+        print("Neutral !! HOLD")
+        
+polarityLists=[]
         
 for tweet in search_results:
     blob=TextBlob(tweet.text)
+    polarityLists.append(blob.polarity)
     print(tweet.text)
-    print("polarity ",blob.polarity)
-    sentiment_scores(blob.polarity)
+    # print("polarity ",blob.polarity)
+    
+meanPolarity=statistics.mean(polarityLists)    
+sentiment_scores(meanPolarity)
 
 
